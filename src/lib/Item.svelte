@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dragStore } from '../stores';
 	import Tooltip from './Tooltip.svelte';
 
 	let visible = false;
@@ -16,7 +17,21 @@
 </script>
 
 <div
+	on:mousedown={(e) => {
+		if ($dragStore) {
+			visible = true;
+			$dragStore = undefined;
+			return;
+		}
+		visible = false;
+		$dragStore = {
+			name,
+			identifier,
+			texture
+		};
+	}}
 	on:mouseenter={(e) => {
+		if ($dragStore) return;
 		visible = true;
 		setCursorPos(e);
 	}}
@@ -25,8 +40,8 @@
 	}}
 	on:mousemove={(e) => setCursorPos(e)}
 >
-	<span class="itemspan">
-		<img src={texture} alt={name} />
+	<span class="grid">
+		<img class="img" src={texture} alt={name} width="32px" height="32px" />
 		<Tooltip
 			title={name}
 			description={identifier}
@@ -41,7 +56,7 @@
 </div>
 
 <style>
-	.itemspan {
+	.grid {
 		position: relative;
 		display: inline-block;
 		text-align: center !important;
@@ -50,5 +65,16 @@
 		border-style: solid;
 		border-width: 2px;
 		vertical-align: middle;
+	}
+
+	.grid:hover {
+		background-color: #dddddd;
+	}
+
+	.img {
+		width: 32px !important;
+		height: 32px !important;
+		image-rendering: crisp-edges;
+		image-rendering: pixelated;
 	}
 </style>
