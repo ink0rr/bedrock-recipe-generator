@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
 </script>
 
-<div class="card">
-	<div class="card-header">
-		<div class="card-title">Crafting</div>
-	</div>
-	<div class="card-body">
+<Card>
+	<CardHeader>
+		<CardTitle>Crafting</CardTitle>
+	</CardHeader>
+	<CardBody>
 		<div class="crafting-holder">
 			<h6 class="crafting-title">Crafting</h6>
 			<div class="crafting-wrapper">
@@ -16,8 +17,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</CardBody>
+</Card>
 
 <style>
 	.crafting-holder {

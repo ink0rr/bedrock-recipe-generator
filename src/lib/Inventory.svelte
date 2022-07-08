@@ -2,6 +2,7 @@
 	import Item from './Item.svelte';
 	import { textureStore } from '../stores';
 	import { debounce } from 'lodash';
+	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
 
 	let query = '';
 	$: items = $textureStore.filter((v) => {
@@ -9,11 +10,11 @@
 	});
 </script>
 
-<div class="card">
-	<div class="card-header">
-		<div class="card-title">Inventory</div>
-	</div>
-	<div class="card-body">
+<Card>
+	<CardHeader>
+		<CardTitle>Inventory</CardTitle>
+	</CardHeader>
+	<CardBody>
 		<span class="search-box">
 			<p>Search:</p>
 			<input
@@ -34,8 +35,8 @@
 				{/each}
 			{/if}
 		</div>
-	</div>
-</div>
+	</CardBody>
+</Card>
 
 <style>
 	.inventory {
