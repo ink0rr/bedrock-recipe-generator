@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Item from './Item.svelte';
-	import { textureStore } from '../stores';
+	import { itemStore } from '../stores';
 	import { debounce } from 'lodash';
 	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
 
 	let query = '';
-	$: items = $textureStore.filter((v) => {
+	$: items = $itemStore.filter((v) => {
 		return v.readable.toLowerCase().includes(query.toLowerCase());
 	});
 </script>

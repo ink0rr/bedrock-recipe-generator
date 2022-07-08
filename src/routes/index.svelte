@@ -5,16 +5,23 @@
 <script lang="ts">
 	import type { MinecraftTextures } from '../types/Minecraft';
 
-	import { dragStore, textureStore } from '../stores';
+	import { dragStore, itemStore } from '../stores';
 	import { Styles } from 'sveltestrap';
 	import Inventory from '$lib/Inventory.svelte';
 	import DraggedItem from '$lib/DraggedItem.svelte';
 	import Crafting from '$lib/Crafting.svelte';
+	import bedrock from '../bedrock';
 
 	fetch(`https://unpkg.com/minecraft-textures@1.19.0/dist/textures/json/1.19.json`)
 		.then((response) => response.json())
-		.then((textures: MinecraftTextures) => {
-			textureStore.set(textures.items);
+		.then(({ items }: MinecraftTextures) => {
+			$itemStore = items
+				.filter((v) => !bedrock.ignore.includes(v.id))
+				.map((v) => {
+					const item = bedrock.conversions[v.id];
+					if (item) item.id = item.id + (item.data ? `<${item.data}>` : ``);
+					return v;
+				});
 		});
 
 	$: x = 0;
