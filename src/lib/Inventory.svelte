@@ -25,10 +25,8 @@
 			/>
 		</span>
 		<div class="inventory">
-			{#if items.length === 0}
-				<div class="inventory-loading-text">
-					{'Loading...'}
-				</div>
+			{#if $itemStore.length === 0}
+				<div class="inventory-loading-text">Loading...</div>
 			{:else}
 				{#each items as item}
 					<Item props={item} />
