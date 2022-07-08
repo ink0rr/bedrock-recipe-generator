@@ -10,9 +10,12 @@
 </div>
 
 <style>
+	* {
+		pointer-events: none;
+    user-select: none;
+	}
 	div {
 		z-index: 1;
-		pointer-events: none;
 	}
 	.img {
 		width: 42px !important;

@@ -3,12 +3,12 @@
 </script>
 
 <script lang="ts">
-	import Inventory from '$lib/Inventory.svelte';
-	import DraggedItem from '$lib/DraggedItem.svelte';
+	import type { MinecraftTextures } from '../types/Minecraft';
+
 	import { dragStore, textureStore } from '../stores';
 	import { Styles } from 'sveltestrap';
-
-	import type { MinecraftTextures } from '../types/Minecraft';
+	import Inventory from '$lib/Inventory.svelte';
+	import DraggedItem from '$lib/DraggedItem.svelte';
 	import Crafting from '$lib/Crafting.svelte';
 
 	fetch(`https://unpkg.com/minecraft-textures@1.19.0/dist/textures/json/1.19.json`)
@@ -32,15 +32,15 @@
 		}}
 	>
 		{#if $dragStore}
-			<DraggedItem name={$dragStore.name} texture={$dragStore.texture} {x} {y} />
+			<DraggedItem name={$dragStore.readable} texture={$dragStore.texture} {x} {y} />
 		{/if}
 
 		<div class="row">
 			<div class="col-md-6 col-sm-12">
-				<Crafting />
+				<Inventory />
 			</div>
 			<div class="pull-right col-md-6 col-sm-12">
-				<Inventory />
+				<Crafting />
 			</div>
 		</div>
 	</div>

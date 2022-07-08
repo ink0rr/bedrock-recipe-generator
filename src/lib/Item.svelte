@@ -1,59 +1,61 @@
 <script lang="ts">
-	import { dragStore } from '../stores';
+	import type { MinecraftTextureItem } from 'src/types/Minecraft';
+
+	import { dragStore, isPicking } from '../stores';
 	import Tooltip from './Tooltip.svelte';
 
-	let visible = false;
-	let x = 0;
-	let y = 0;
-
-	function setCursorPos(e: MouseEvent) {
-		x = e.clientX;
-		y = e.clientY;
-	}
-
-	export let name = '';
-	export let identifier = '';
-	export let texture = '';
+	export let props: MinecraftTextureItem | undefined = undefined;
+	export let isCrafting = false;
 </script>
 
-<div
-	on:mousedown={(e) => {
-		if ($dragStore) {
-			visible = true;
-			$dragStore = undefined;
-			return;
-		}
-		visible = false;
-		$dragStore = {
-			name,
-			identifier,
-			texture
-		};
-	}}
-	on:mouseenter={(e) => {
-		if ($dragStore) return;
-		visible = true;
-		setCursorPos(e);
-	}}
-	on:mouseleave={() => {
-		visible = false;
-	}}
-	on:mousemove={(e) => setCursorPos(e)}
->
-	<span class="grid">
-		<img class="img" src={texture} alt={name} width="32px" height="32px" />
-		<Tooltip
-			title={name}
-			description={identifier}
-			style={{
-				x,
-				y,
-				display: visible ? 'block' : 'hidden'
-			}}
-			{visible}
-		/>
-	</span>
-</div>
+{#if props}
+	{@const { id, readable, texture } = props}
+	<div
+		on:mousedown={(e) => {
+			$isPicking = true;
+			if (!isCrafting) {
+				$dragStore = $dragStore ? undefined : props;
+				return;
+			}
+
+			if ($dragStore) {
+				[props, $dragStore] = [$dragStore, props];
+			} else {
+				if (e.shiftKey) $isPicking = false;
+				else $dragStore = props;
+
+				props = undefined;
+			}
+		}}
+		on:mouseup={(e) => {
+			if (isCrafting && !$isPicking) {
+				$dragStore = undefined;
+			}
+		}}
+	>
+		<span class="grid">
+			<Tooltip title={readable} description={id}>
+				<img class="img" src={texture} alt={readable} width="32px" height="32px" />
+			</Tooltip>
+		</span>
+	</div>
+{:else}
+	<div
+		on:mouseenter={(e) => {
+			if (e.buttons && $dragStore && !$isPicking) {
+				props = $dragStore;
+			}
+		}}
+		on:mousedown={() => {
+			$isPicking = false;
+			props = $dragStore;
+		}}
+	>
+		<span class="grid">
+			<div style="height: 32px; width: 32px;" />
+		</span>
+	</div>
+{/if}
 
 <style>
 	.grid {
@@ -72,6 +74,7 @@
 	}
 
 	.img {
+		pointer-events: none;
 		width: 32px !important;
 		height: 32px !important;
 		image-rendering: crisp-edges;

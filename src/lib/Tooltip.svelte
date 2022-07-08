@@ -1,24 +1,30 @@
 <script lang="ts">
 	export let title = '';
 	export let description = '';
-	export let style = {
-		display: 'hidden',
-		x: 0,
-		y: 0
-	};
-	export let visible = false;
 
-  
+	let visible = false;
+	let x = 0;
+	let y = 0;
+
+	function setCursorPos(e: MouseEvent) {
+		x = e.clientX;
+		y = e.clientY;
+	}
 </script>
 
-<section>
-	{#if visible}
-		<div
-			class="mc-tooltip"
-			style:display={style.display}
-			style:left={style.x + 'px'}
-			style:top={style.y + 'px'}
-		>
+<div
+	on:mouseenter={(e) => {
+		visible = true;
+		setCursorPos(e);
+	}}
+	on:mouseleave={() => {
+		visible = false;
+	}}
+	on:mousemove={(e) => setCursorPos(e)}
+>
+	<slot />
+	{#if visible && (title || description)}
+		<div class="mc-tooltip" style:left={x + 'px'} style:top={y + 'px'}>
 			<div class="mc-tooltip-title">
 				{title}
 			</div>
@@ -27,12 +33,13 @@
 			</div>
 		</div>
 	{/if}
-</section>
+</div>
 
 <style>
 	.mc-tooltip {
 		text-align: left;
 		position: fixed;
+		display: block;
 		top: 0;
 		left: 0;
 		background-color: #100010;

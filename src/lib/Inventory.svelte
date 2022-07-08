@@ -31,7 +31,7 @@
 				</div>
 			{:else}
 				{#each items as item}
-					<Item name={item.readable} identifier={item.id} texture={item.texture} />
+					<Item props={item} />
 				{/each}
 			{/if}
 		</div>
@@ -40,6 +40,7 @@
 
 <style>
 	.inventory {
+		user-select: none;
 		display: flex;
 		flex-wrap: wrap;
 		padding: 10px;

@@ -1,5 +1,16 @@
 <script lang="ts">
+	import type { MinecraftTextureItem } from 'src/types/Minecraft';
+
 	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
+	import Item from './Item.svelte';
+
+	let grids: Record<number, MinecraftTextureItem | undefined> = {};
+
+	$: {
+		for (const grid in grids) {
+			console.log(grids[grid]?.id);
+		}
+	}
 </script>
 
 <Card>
@@ -12,7 +23,11 @@
 			<div class="crafting-wrapper">
 				<div class="crafting">
 					<div class="recipe">
-						<button>Grid</button>
+						<div class="table-grid">
+							{#each [...Array(9).keys()] as key}
+								<Item isCrafting={true} bind:props={grids[key]} />
+							{/each}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -21,6 +36,9 @@
 </Card>
 
 <style>
+	* {
+		user-select: none;
+	}
 	.crafting-holder {
 		display: flex;
 		flex-wrap: wrap;
@@ -47,5 +65,16 @@
 		flex-direction: row;
 		align-items: center;
 		padding: 10px;
+	}
+
+	.recipe {
+		display: flex;
+	}
+
+	.table-grid {
+		display: flex;
+		flex-wrap: wrap;
+
+		width: 110px;
 	}
 </style>
