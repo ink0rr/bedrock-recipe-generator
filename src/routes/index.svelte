@@ -19,7 +19,10 @@
 				.filter((v) => !bedrock.ignore.includes(v.id))
 				.map((v) => {
 					const item = bedrock.conversions[v.id];
-					if (item) item.id = item.id + (item.data ? `<${item.data}>` : ``);
+					if (item) {
+						v.id = item.id;
+						v.data = item.data;
+					}
 					return v;
 				});
 		});

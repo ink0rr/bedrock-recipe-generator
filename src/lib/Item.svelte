@@ -6,10 +6,12 @@
 
 	export let props: MinecraftTextureItem | undefined = undefined;
 	export let isCrafting = false;
+
+	const formatId = (id: string, data?: number) => id + (data ? `<${data}>` : ``);
 </script>
 
 {#if props}
-	{@const { id, readable, texture } = props}
+	{@const { id, readable, texture, data } = props}
 	<div
 		on:mousedown={(e) => {
 			$isPicking = true;
@@ -34,7 +36,7 @@
 		}}
 	>
 		<span class="grid">
-			<Tooltip title={readable} description={id}>
+			<Tooltip title={readable} description={formatId(id, data)}>
 				<img class="img" src={texture} alt={readable} width="32px" height="32px" />
 			</Tooltip>
 		</span>
