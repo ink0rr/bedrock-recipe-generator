@@ -1,5 +1,5 @@
 {
-	"name": "recipe-generator-svelte",
+	"name": "bedrock-recipe-generator",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",

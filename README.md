@@ -1,22 +1,10 @@
-# create-svelte
+# Bedrock Recipe Generator
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
-```
+Crafting Recipe Generator for Minecraft Bedrock. **WIP**
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies with `npm install` (or `pnpm install` or `yarn`) and start a development server
 
 ```bash
 npm run dev
@@ -25,14 +13,6 @@ npm run dev
 npm run dev -- --open
 ```
 
-## Building
+## Credits
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Credits to [@destruc7i0n](https://github.com/destruc7i0n) that made the original [website](https://github.com/destruc7i0n/crafting) and providing [minecraft-textures](https://github.com/destruc7i0n/minecraft-textures) library that contains all Minecraft's item ids and textures
