@@ -36,6 +36,6 @@
 		"@fontsource/fira-mono": "^4.5.0",
 		"cookie": "^0.4.1",
 		"lodash": "^4.17.21",
-		"sveltestrap": "^5.9.0"
+		"sveltestrap": "github:laxadev/sveltestrap"
 	}
 }
