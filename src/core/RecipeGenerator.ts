@@ -1,7 +1,7 @@
 import type { MCRecipeItem, Recipe } from 'src/types/MCRecipe';
 import type { MinecraftTextureItem } from 'src/types/Minecraft';
 
-import { findKey } from 'lodash';
+import { findKey } from 'lodash-es';
 
 const formatShape = (arr: string[], size: number) =>
 	arr.reduce((res, curr, i) => {

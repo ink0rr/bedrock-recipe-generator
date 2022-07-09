@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { MinecraftTextureItem } from '../types/Minecraft';
 
-	import { debounce } from 'lodash';
+	import { debounce } from 'lodash-es';
 	import { getContext } from 'svelte';
 	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
 	import Item from './Item.svelte';

@@ -16,7 +16,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/cookie": "^0.5.1",
-		"@types/lodash": "^4.14.182",
+		"@types/lodash-es": "^4.17.6",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"eslint": "^8.16.0",
@@ -35,7 +35,7 @@
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.0",
 		"cookie": "^0.4.1",
-		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21",
 		"sveltestrap": "github:laxadev/sveltestrap"
 	}
 }
