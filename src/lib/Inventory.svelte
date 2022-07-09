@@ -1,11 +1,15 @@
 <script lang="ts">
-	import Item from './Item.svelte';
-	import { itemStore } from '../stores';
+	import type { MinecraftTextureItem } from '../types/Minecraft';
+
 	import { debounce } from 'lodash';
+	import { getContext } from 'svelte';
 	import { Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
+	import Item from './Item.svelte';
 
 	let query = '';
-	$: items = $itemStore.filter((v) => {
+
+	const items = getContext<MinecraftTextureItem[]>('items');
+	$: searchResult = items.filter((v) => {
 		return v.readable.toLowerCase().includes(query.toLowerCase());
 	});
 </script>
@@ -25,13 +29,9 @@
 			/>
 		</span>
 		<div class="inventory">
-			{#if $itemStore.length === 0}
-				<div class="inventory-loading-text">Loading...</div>
-			{:else}
-				{#each items as item}
-					<Item props={item} />
-				{/each}
-			{/if}
+			{#each searchResult as item}
+				<Item props={item} />
+			{/each}
 		</div>
 	</CardBody>
 </Card>
@@ -47,13 +47,7 @@
 		border: 2px solid #373737;
 		border-right-color: #fff;
 		border-bottom-color: #fff;
-	}
-
-	.inventory-loading-text {
-		display: flex;
-		justify-content: center;
-		width: 100%;
-		font-family: Minecraft, sans-serif;
+		min-height: 60px;
 	}
 
 	.inventory {

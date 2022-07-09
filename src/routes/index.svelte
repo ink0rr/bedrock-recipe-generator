@@ -3,32 +3,34 @@
 </script>
 
 <script lang="ts">
-	import type { MinecraftTextures } from '../types/Minecraft';
+	import type { MinecraftTextureItem } from '../types/Minecraft';
 
-	import { dragStore, itemStore } from '../stores';
-	import { Styles } from 'sveltestrap';
-	import Inventory from '$lib/Inventory.svelte';
-	import DraggedItem from '$lib/DraggedItem.svelte';
 	import Crafting from '$lib/Crafting.svelte';
+	import DraggedItem from '$lib/DraggedItem.svelte';
+	import Inventory from '$lib/Inventory.svelte';
+	import { setContext } from 'svelte';
+	import { Styles } from 'sveltestrap';
 	import bedrock from '../bedrock';
-
-	fetch(`https://unpkg.com/minecraft-textures@1.19.0/dist/textures/json/1.19.json`)
-		.then((response) => response.json())
-		.then(({ items }: MinecraftTextures) => {
-			$itemStore = items
-				.filter((v) => !bedrock.ignore.includes(v.id))
-				.map((v) => {
-					const item = bedrock.conversions[v.id];
-					if (item) {
-						v.id = item.id;
-						v.data = item.data;
-					}
-					return v;
-				});
-		});
+	import { dragStore } from '../stores';
 
 	$: x = 0;
 	$: y = 0;
+
+	export let recipe: string;
+	export let items: MinecraftTextureItem[] = [];
+	setContext(
+		'items',
+		items
+			.filter((v) => !bedrock.ignore.includes(v.id))
+			.map((v) => {
+				const item = bedrock.conversions[v.id];
+				if (item) {
+					v.id = item.id;
+					v.data = item.data;
+				}
+				return v;
+			})
+	);
 </script>
 
 <Styles />
@@ -50,7 +52,7 @@
 				<Inventory />
 			</div>
 			<div class="pull-right col-md-6 col-sm-12">
-				<Crafting />
+				<Crafting {recipe} />
 			</div>
 		</div>
 	</div>

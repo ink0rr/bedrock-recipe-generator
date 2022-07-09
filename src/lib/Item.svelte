@@ -22,12 +22,13 @@
 
 			if ($dragStore) {
 				[props, $dragStore] = [$dragStore, props];
-			} else {
-				if (e.shiftKey) $isPicking = false;
-				else $dragStore = props;
-
-				props = undefined;
+				return;
 			}
+
+			if (e.shiftKey) $isPicking = false;
+			else $dragStore = props;
+
+			props = undefined;
 		}}
 		on:mouseup={(e) => {
 			if (isCrafting && !$isPicking) {
