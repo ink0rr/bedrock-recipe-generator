@@ -24,11 +24,12 @@
 			.filter((v) => !bedrock.ignore.includes(v.id))
 			.map((v) => {
 				const item = bedrock.conversions[v.id];
+				const res = { ...v };
 				if (item) {
-					v.id = item.id;
-					v.data = item.data;
+					res.id = item.id;
+					res.data = item.data;
 				}
-				return v;
+				return res;
 			})
 	);
 </script>
