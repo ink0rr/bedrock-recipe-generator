@@ -274,10 +274,6 @@ const bedrock: Bedrock = {
 		'minecraft:note_block': {
 			'id': 'minecraft:noteblock'
 		},
-		'minecraft:sticky_piston': {
-			'id': 'minecraft:sticky_piston',
-			'data': 1
-		},
 		'minecraft:cobweb': {
 			'id': 'minecraft:web'
 		},
@@ -291,10 +287,6 @@ const bedrock: Bedrock = {
 		},
 		'minecraft:dead_bush': {
 			'id': 'minecraft:deadbush'
-		},
-		'minecraft:piston': {
-			'id': 'minecraft:piston',
-			'data': 1
 		},
 		'minecraft:white_wool': {
 			'id': 'minecraft:wool'
@@ -663,10 +655,6 @@ const bedrock: Bedrock = {
 		'minecraft:damaged_anvil': {
 			'id': 'minecraft:anvil',
 			'data': 8
-		},
-		'minecraft:dropper': {
-			'id': 'minecraft:dropper',
-			'data': 3
 		},
 		'minecraft:white_terracotta': {
 			'id': 'minecraft:stained_hardened_clay'
