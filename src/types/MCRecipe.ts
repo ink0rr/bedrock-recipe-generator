@@ -55,9 +55,9 @@ export interface MCRecipeShapeless {
 
 export interface Recipe {
 	format_version: `1.12.0`;
-	MCRecipeBrewingContainer?: MCRecipeBrewing;
-	MCRecipeBrewingMix?: MCRecipeBrewing;
-	MCRecipeFurnace?: MCRecipeFurnace;
-	MCRecipeShaped?: MCRecipeShaped;
-	MCRecipeShapeless?: MCRecipeShapeless;
+	'minecraft:recipe_brewing_container'?: MCRecipeBrewing;
+	'minecraft:recipe_brewing_mix'?: MCRecipeBrewing;
+	'minecraft:recipe_furnace'?: MCRecipeFurnace;
+	'minecraft:recipe_shaped'?: MCRecipeShaped;
+	'minecraft:recipe_shapeless'?: MCRecipeShapeless;
 }

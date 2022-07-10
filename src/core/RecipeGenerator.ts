@@ -39,7 +39,7 @@ export function parseRecipe(
 	}
 	return {
 		format_version: `1.12.0`,
-		MCRecipeShaped: {
+		'minecraft:recipe_shaped': {
 			description: {
 				identifier: `result`
 			},
