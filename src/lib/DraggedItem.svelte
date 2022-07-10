@@ -12,7 +12,7 @@
 <style>
 	* {
 		pointer-events: none;
-    user-select: none;
+		user-select: none;
 	}
 	div {
 		z-index: 1;

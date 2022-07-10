@@ -4,12 +4,13 @@
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
 	import { getContext } from 'svelte';
-	import { Button, Card, CardBody, CardHeader, CardTitle } from 'sveltestrap';
+	import { Button, Card, CardBody, CardHeader, CardTitle, Input, Label } from 'sveltestrap';
 	import { parseRecipe } from '../core/RecipeGenerator';
 	import Item from './Item.svelte';
 
 	export let recipe: string | undefined;
 
+	let exact: boolean;
 	const items = getContext<MinecraftTextureItem[]>('items');
 	let grids: Record<number, MinecraftTextureItem | undefined> = {};
 
@@ -62,12 +63,13 @@
 				</div>
 			</div>
 		</div>
+		<Input type="checkbox" label="Exact" bind:checked={exact} />
 		<Button on:click={share}>Share</Button>
 	</CardBody>
 </Card>
 
 <code>
-	{JSON.stringify(parseRecipe(grids), null, 2)}
+	{JSON.stringify(parseRecipe(grids, exact), null, 2)}
 </code>
 
 <style>

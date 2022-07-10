@@ -10,7 +10,7 @@
 	import Inventory from '$lib/Inventory.svelte';
 	import { setContext } from 'svelte';
 	import { Styles } from 'sveltestrap';
-	import bedrock from '../bedrock';
+	import { convertBedrock } from '../core/bedrock';
 	import { dragStore } from '../stores';
 
 	$: x = 0;
@@ -18,20 +18,8 @@
 
 	export let recipe: string;
 	export let items: MinecraftTextureItem[] = [];
-	setContext(
-		'items',
-		items
-			.filter((v) => !bedrock.ignore.includes(v.id))
-			.map((v) => {
-				const item = bedrock.conversions[v.id];
-				const res = { ...v };
-				if (item) {
-					res.id = item.id;
-					res.data = item.data;
-				}
-				return res;
-			})
-	);
+
+	setContext('items', convertBedrock(items));
 </script>
 
 <Styles />

@@ -3,18 +3,18 @@ import type { MinecraftTextureItem } from 'src/types/Minecraft';
 
 import { findKey } from 'lodash-es';
 
-const formatShape = (arr: string[], size: number) =>
-	arr.reduce((res, curr, i) => {
-		const idx = res.length - 1;
-		if (i % size) res[idx] = res[idx] + curr;
-		else res.push(curr);
-		return res;
-	}, [] as string[]);
+export function parseRecipe(
+	grids: Record<number, MinecraftTextureItem | undefined>,
+	exact: boolean
+): Recipe {
+	const patternChars = [...'#ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 
-export function parseRecipe(grids: Record<number, MinecraftTextureItem | undefined>): Recipe {
-	const pattern = [...'#ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 	const key: Record<string, MCRecipeItem> = {};
-	const shape = new Array(9).fill(' ');
+	const pattern = [
+		[' ', ' ', ' '],
+		[' ', ' ', ' '],
+		[' ', ' ', ' ']
+	];
 
 	for (const i in grids) {
 		const item = grids[i];
@@ -22,24 +22,41 @@ export function parseRecipe(grids: Record<number, MinecraftTextureItem | undefin
 
 		let k = findKey(key, (v) => v.item === item.id && v.data === item.data);
 		if (!k) {
-			k = pattern.shift() as string;
+			k = patternChars.shift() as string;
 			key[k] = {
 				item: item.id,
-				count: 1,
-				data: item.data
+				data: item.data,
+				count: 1
 			};
 		}
-		shape[i] = k;
+		const idx = parseInt(i);
+		pattern[Math.floor(idx / 3)][idx % 3] = k;
 	}
 
+	let res = pattern.map((s) => s.join(''));
+	if (!exact) {
+		res = removeSpaces(res);
+	}
 	return {
 		format_version: `1.12.0`,
-		MCRecipeShaped: {
+		'minecraft:recipe_shaped': {
 			description: {
 				identifier: `result`
 			},
-			pattern: formatShape(shape, 3),
+			pattern: res,
 			key
 		}
 	};
 }
+
+const removeSpaces = (arr: string[]) => {
+	const min: number[] = [];
+	const max: number[] = [];
+	for (const s of arr) {
+		min.push(3 - s.trimStart().length);
+		max.push(3 - s.trimEnd().length);
+	}
+	const start = Math.min(...min);
+	const end = 3 - Math.min(...max);
+	return arr.filter((s) => s.trim().length > 0).map((s) => s.slice(start, end));
+};
