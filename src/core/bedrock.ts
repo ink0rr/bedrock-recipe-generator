@@ -1,11 +1,25 @@
-export type Bedrock = {
-	conversions: Record<
-		string,
-		{
+import type { MinecraftTextureItem } from '../types/Minecraft';
+
+export const convertBedrock = (items: MinecraftTextureItem[]) =>
+	items
+		.filter((v) => !bedrock.ignore.includes(v.id))
+		.map((v) => {
+			const item = bedrock.conversions[v.id];
+			const res = { ...v };
+			if (item) {
+				res.id = item.id;
+				res.data = item.data;
+			}
+			return res;
+		});
+
+type Bedrock = {
+	conversions: {
+		[key: string]: {
 			id: string;
 			data?: number;
-		}
-	>;
+		};
+	};
 	ignore: string[];
 };
 
@@ -1494,5 +1508,3 @@ const bedrock: Bedrock = {
 		'minecraft:bundle'
 	]
 };
-
-export default bedrock;
