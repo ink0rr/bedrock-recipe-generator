@@ -37,9 +37,9 @@
 			}
 		}
 		const buf = btoa(JSON.stringify(res));
-		navigator.clipboard.writeText(`localhost:3000?recipe=${buf}`);
-		goto(`?recipe=${buf}`);
-		alert('Link copied to clipboard');
+		const params = `recipe=${buf}`;
+		navigator.clipboard.writeText(`${window.location.host}?${params}`);
+		goto(`?${params}`, { noscroll: true });
 	}
 </script>
 
