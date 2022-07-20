@@ -16,7 +16,7 @@
 	$: x = 0;
 	$: y = 0;
 
-	export let recipe: string;
+	export let recipeUrl: string;
 	export let items: MinecraftTextureItem[] = [];
 
 	setContext('items', convertBedrock(items));
@@ -41,7 +41,7 @@
 				<Inventory />
 			</div>
 			<div class="pull-right col-md-6 col-sm-12">
-				<Crafting {recipe} />
+				<Crafting {recipeUrl} />
 			</div>
 		</div>
 	</div>

@@ -1,12 +1,15 @@
+import type { GridItem, Grids } from 'src/types/Grids';
 import type { MCRecipeItem, Recipe } from 'src/types/MCRecipe';
-import type { MinecraftTextureItem } from 'src/types/Minecraft';
 
 import { findKey } from 'lodash-es';
 
-export function parseRecipe(
-	grids: Record<number, MinecraftTextureItem | undefined>,
-	exact: boolean
-): Recipe {
+type ParseRecipeOptions = {
+	input: Grids;
+	output?: GridItem;
+	exact?: boolean;
+};
+
+export function parseRecipe({ input, output, exact }: ParseRecipeOptions): Recipe {
 	const patternChars = [...'#ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 
 	const key: Record<string, MCRecipeItem> = {};
@@ -16,8 +19,8 @@ export function parseRecipe(
 		[' ', ' ', ' ']
 	];
 
-	for (const i in grids) {
-		const item = grids[i];
+	for (const i in input) {
+		const item = input[i];
 		if (!item) continue;
 
 		let k = findKey(key, (v) => v.item === item.id && v.data === item.data);
@@ -37,6 +40,10 @@ export function parseRecipe(
 	if (!exact) {
 		res = removeSpaces(res);
 	}
+	const result: MCRecipeItem | undefined = output && {
+		item: output.id,
+		data: output.data
+	};
 	return {
 		format_version: `1.12.0`,
 		'minecraft:recipe_shaped': {
@@ -44,7 +51,8 @@ export function parseRecipe(
 				identifier: `result`
 			},
 			pattern: res,
-			key
+			key,
+			result
 		}
 	};
 }
