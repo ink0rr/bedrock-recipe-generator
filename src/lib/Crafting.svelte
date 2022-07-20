@@ -2,7 +2,10 @@
 	import type { GridItem, Grids } from 'src/types/Grids';
 	import type { MinecraftTextureItem } from 'src/types/Minecraft';
 
+	import register from 'highlight.js/lib/languages/json';
 	import { getContext } from 'svelte';
+	import Highlight from 'svelte-highlight';
+	import 'svelte-highlight/styles/atom-one-dark.css';
 	import { Button, Card, CardBody, CardHeader, CardTitle, Input } from 'sveltestrap';
 	import { loadRecipe } from '../core/load';
 	import { parseRecipe } from '../core/RecipeGenerator';
@@ -49,15 +52,20 @@
 	</CardBody>
 </Card>
 
-<code>
-	{JSON.stringify(parseRecipe({ input: grids, output: result, exact }), null, 2)}
-</code>
+<Highlight
+	language={{ name: 'json', register }}
+	code={JSON.stringify(
+		parseRecipe({
+			input: grids,
+			output: result,
+			exact
+		}),
+		null,
+		2
+	)}
+/>
 
 <style>
-	code {
-		display: block;
-		white-space: pre-wrap;
-	}
 	* {
 		user-select: none;
 	}
