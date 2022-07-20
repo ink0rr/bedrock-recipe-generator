@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MinecraftTextureItem } from '../types/Minecraft';
+	import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
 	import { debounce } from 'lodash-es';
 	import { getContext } from 'svelte';

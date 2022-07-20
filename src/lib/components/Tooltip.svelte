@@ -20,7 +20,7 @@
 	on:mouseleave={() => {
 		visible = false;
 	}}
-	on:mousemove={(e) => setCursorPos(e)}
+	on:mousemove={setCursorPos}
 >
 	<slot />
 	{#if visible && (title || description)}

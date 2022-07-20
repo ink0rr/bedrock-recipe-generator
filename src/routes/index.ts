@@ -1,16 +1,16 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import type { MinecraftTextures } from 'src/types/Minecraft';
+import type { MinecraftTextures } from '$lib/types/Minecraft';
 
-export const get: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url }) => {
 	const response = await fetch(
 		`https://unpkg.com/minecraft-textures@1.19.0/dist/textures/json/1.19.json`
 	);
-	const json: MinecraftTextures = await response.json();
-	const recipe = url.searchParams.get('recipe');
+	const { items }: MinecraftTextures = await response.json();
+	const recipeUrl = url.searchParams.get('recipe');
 	return {
 		body: {
-			items: json.items,
-			recipe
+			items,
+			recipeUrl
 		}
 	};
 };

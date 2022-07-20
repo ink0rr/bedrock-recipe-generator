@@ -1,46 +1,26 @@
 <script lang="ts">
-	import type { MinecraftTextureItem } from 'src/types/Minecraft';
+	import type { GridItem, Grids } from '$lib/types/Grids';
+	import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
-	import { browser } from '$app/env';
-	import { goto } from '$app/navigation';
+	import { loadRecipe } from '$lib/core/load';
+	import { parseRecipe } from '$lib/core/RecipeGenerator';
+	import { shareRecipe } from '$lib/core/share';
+	import register from 'highlight.js/lib/languages/json';
 	import { getContext } from 'svelte';
-	import { Button, Card, CardBody, CardHeader, CardTitle, Input, Label } from 'sveltestrap';
-	import { parseRecipe } from '../core/RecipeGenerator';
+	import Highlight from 'svelte-highlight';
+	import 'svelte-highlight/styles/atom-one-dark.css';
+	import { Button, Card, CardBody, CardHeader, CardTitle, Input } from 'sveltestrap';
 	import Item from './Item.svelte';
 
-	export let recipe: string | undefined;
+	export let recipeUrl: string | undefined;
 
 	let exact: boolean;
 	const items = getContext<MinecraftTextureItem[]>('items');
-	let grids: Record<number, MinecraftTextureItem | undefined> = {};
+	let grids: Grids = {};
+	let result: GridItem;
 
-	if (recipe) {
-		try {
-			const arr = JSON.parse(atob(recipe)) as number[];
-			arr.forEach((id, i) => {
-				if (id === -1) return;
-				grids[i] = items[id];
-			});
-		} catch (e) {
-			console.error(e);
-			if (browser) goto(`/`);
-		}
-	}
-
-	function share() {
-		let res: number[] = new Array(9).fill(-1);
-		for (const i in items) {
-			const item = items[i];
-			for (const k in grids) {
-				const gridItem = grids[k];
-				if (!gridItem) continue;
-				if (item.id === gridItem.id && item.data === gridItem.data) res[k] = parseInt(i);
-			}
-		}
-		const buf = btoa(JSON.stringify(res));
-		const params = `recipe=${buf}`;
-		navigator.clipboard.writeText(`${window.location.host}?${params}`);
-		goto(`?${params}`, { noscroll: true });
+	if (recipeUrl) {
+		[grids, result] = loadRecipe(items, recipeUrl);
 	}
 </script>
 
@@ -60,23 +40,32 @@
 							{/each}
 						</div>
 					</div>
+					<div class="arrow" />
+					<div class="crafting-table-output">
+						<Item isCrafting={true} bind:props={result} />
+					</div>
 				</div>
 			</div>
 		</div>
 		<Input type="checkbox" label="Exact" bind:checked={exact} />
-		<Button on:click={share}>Share</Button>
+		<Button on:click={() => shareRecipe(items, grids, result)}>Share</Button>
 	</CardBody>
 </Card>
 
-<code>
-	{JSON.stringify(parseRecipe(grids, exact), null, 2)}
-</code>
+<Highlight
+	language={{ name: 'json', register }}
+	code={JSON.stringify(
+		parseRecipe({
+			input: grids,
+			output: result,
+			exact
+		}),
+		null,
+		2
+	)}
+/>
 
 <style>
-	code {
-		display: block;
-		white-space: pre-wrap;
-	}
 	* {
 		user-select: none;
 	}
@@ -117,5 +106,8 @@
 		flex-wrap: wrap;
 
 		width: 110px;
+	}
+	.crafting-table-output {
+		display: flex;
 	}
 </style>
