@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import type { MinecraftTextures } from 'src/types/Minecraft';
+import type { MinecraftTextures } from '$lib/types/Minecraft';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const response = await fetch(

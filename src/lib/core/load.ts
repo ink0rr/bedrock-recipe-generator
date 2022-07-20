@@ -1,10 +1,10 @@
-import type { GridItem, Grids } from 'src/types/Grids';
-import type { MinecraftTextureItem } from 'src/types/Minecraft';
-import type { RecipeUrl } from 'src/types/RecipeUrl';
+import type { GridItem, Grids } from '$lib/types/Grids';
+import type { MinecraftTextureItem } from '$lib/types/Minecraft';
+import type { RecipeUrl } from '$lib/types/RecipeUrl';
 
 import { browser } from '$app/env';
 import { goto } from '$app/navigation';
-import { decodeBase64 } from '../utils/buffer';
+import { decodeBase64 } from '$lib/utils/buffer';
 
 export function loadRecipe(items: MinecraftTextureItem[], recipeUrl: string): [Grids, GridItem] {
 	const grids: Grids = {};

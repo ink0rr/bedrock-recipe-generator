@@ -1,5 +1,5 @@
-import type { GridItem, Grids } from 'src/types/Grids';
-import type { MCRecipeItem, Recipe } from 'src/types/MCRecipe';
+import type { GridItem, Grids } from '$lib/types/Grids';
+import type { MCRecipeItem, Recipe } from '$lib/types/MCRecipe';
 
 import { findKey } from 'lodash-es';
 

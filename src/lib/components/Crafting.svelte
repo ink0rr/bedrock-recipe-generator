@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { GridItem, Grids } from 'src/types/Grids';
-	import type { MinecraftTextureItem } from 'src/types/Minecraft';
+	import type { GridItem, Grids } from '$lib/types/Grids';
+	import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
+	import { loadRecipe } from '$lib/core/load';
+	import { parseRecipe } from '$lib/core/RecipeGenerator';
+	import { shareRecipe } from '$lib/core/share';
 	import register from 'highlight.js/lib/languages/json';
 	import { getContext } from 'svelte';
 	import Highlight from 'svelte-highlight';
 	import 'svelte-highlight/styles/atom-one-dark.css';
 	import { Button, Card, CardBody, CardHeader, CardTitle, Input } from 'sveltestrap';
-	import { loadRecipe } from '../core/load';
-	import { parseRecipe } from '../core/RecipeGenerator';
-	import { shareRecipe } from '../core/share';
 	import Item from './Item.svelte';
 
 	export let recipeUrl: string | undefined;

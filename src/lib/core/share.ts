@@ -1,9 +1,9 @@
-import type { MinecraftTextureItem } from 'src/types/Minecraft';
-import type { RecipeUrl } from 'src/types/RecipeUrl';
+import type { MinecraftTextureItem } from '$lib/types/Minecraft';
+import type { RecipeUrl } from '$lib/types/RecipeUrl';
 
 import { browser } from '$app/env';
 import { goto } from '$app/navigation';
-import { encodeBase64 } from '../utils/buffer';
+import { encodeBase64 } from '$lib/utils/buffer';
 
 export function shareRecipe(
 	items: MinecraftTextureItem[],

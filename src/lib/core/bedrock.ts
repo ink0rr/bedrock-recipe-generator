@@ -1,4 +1,4 @@
-import type { MinecraftTextureItem } from '../types/Minecraft';
+import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
 export const convertBedrock = (items: MinecraftTextureItem[]) =>
 	items

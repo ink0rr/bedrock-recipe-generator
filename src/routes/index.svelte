@@ -3,15 +3,15 @@
 </script>
 
 <script lang="ts">
-	import type { MinecraftTextureItem } from '../types/Minecraft';
+	import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
-	import Crafting from '$lib/Crafting.svelte';
-	import DraggedItem from '$lib/DraggedItem.svelte';
-	import Inventory from '$lib/Inventory.svelte';
+	import Crafting from '$lib/components/Crafting.svelte';
+	import DraggedItem from '$lib/components/DraggedItem.svelte';
+	import Inventory from '$lib/components/Inventory.svelte';
+	import { convertBedrock } from '$lib/core/bedrock';
+	import { dragStore } from '$lib/stores';
 	import { setContext } from 'svelte';
 	import { Styles } from 'sveltestrap';
-	import { convertBedrock } from '../core/bedrock';
-	import { dragStore } from '../stores';
 
 	$: x = 0;
 	$: y = 0;

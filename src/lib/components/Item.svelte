@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { MinecraftTextureItem } from 'src/types/Minecraft';
+	import type { MinecraftTextureItem } from '$lib/types/Minecraft';
 
-	import { dragStore, isPicking } from '../stores';
+	import { dragStore, isPicking } from '$lib/stores';
 	import Tooltip from './Tooltip.svelte';
 
 	export let props: MinecraftTextureItem | undefined = undefined;
